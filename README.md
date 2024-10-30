@@ -5,6 +5,7 @@ This script allow you to configure automatic backup of your WSL machine.
 
 INSTRUCTIONS
 ------------
+You need to execute those commands in PowerShell console
 
 1. To make manual Backup write `.\wsl_backup.ps1 -Backup`
 2. To setup scheduler task write `.\wsl_backup.ps1 -SetUp`
