@@ -26,17 +26,17 @@ function MakeWSLBackup(){
     )
     Remove-Item -Path "$backup_path\ubuntu*.tar"
     $full_name = "$backup_path\$backup_name"
-    Add-Content -Path backup.log -Value "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss K') info Backup is running now..."
+    Add-Content -Path "$backup_path\backup.log" -Value "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss K') info Backup is running now..."
     wsl --export $wsl_name $full_name
-    Add-Content -Path backup.log -Value "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss K') info Backup is finished"
-    Add-Content -Path backup.log -Value "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss K') info Backup size $(((GEt-item $full_name).Length / (1024*1024*1024)).ToString('0.00')) GB"
+    Add-Content -Path "$backup_path\backup.log" -Value "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss K') info Backup is finished"
+    Add-Content -Path "$backup_path\backup.log" -Value "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss K') info Backup size $(((GEt-item $full_name).Length / (1024*1024*1024)).ToString('0.00')) GB"
 }
 
 function SetTaskAction(){
     param (
         [string]$full_path_to_script = $PSCommandPath
     )
-    $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File $full_path_to_script -Backup"
+    $action = New-ScheduledTaskAction -Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument "-File $full_path_to_script -Backup"
     return $action
 }
 
