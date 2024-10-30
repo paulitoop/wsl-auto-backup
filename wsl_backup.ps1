@@ -64,7 +64,7 @@ function RegisterTask {
     param (
         [string]$task_name="WSL backup task v1.0"
     )
-    $result = Register-ScheduledTask -TaskName $task_name -InputObject $task
+    $result = Register-ScheduledTask -TaskName $task_name -InputObject $task 
     return $result
 }
 
@@ -79,21 +79,21 @@ function UnregisterTask {
     catch {
         Add-Content -Path backup.log -Value "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss K') warning Task '$task_name' not found. Can't unregister."
         return 1
-    }
+    } 
     return $0
 }
 
 
-if ($Backup){
-    $res = MakeWSLBackup
-}
-elseif ($SetUp){
+if ($SetUp){
     $action = SetTaskAction
     $trigger = SetTaskTrigger
     $settings = SetTaskSettings
     $task = (SetTask $action $trigger $settings)
     $res = (RegisterTask -InputObject=$task)
 }
-elseif ($CleanUp) {
+if ($Backup){
+    $res = MakeWSLBackup
+}
+if ($CleanUp) {
     $res = UnregisterTask
 }
