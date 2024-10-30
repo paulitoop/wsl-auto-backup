@@ -36,7 +36,7 @@ function SetTaskAction(){
     param (
         [string]$full_path_to_script = $PSCommandPath
     )
-    $action = New-ScheduledTaskAction -Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument "-File $full_path_to_script -Backup"
+    $action = New-ScheduledTaskAction -Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument "-WindowStyle Hidden -File $full_path_to_script -Backup " 
     return $action
 }
 
